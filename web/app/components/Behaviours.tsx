@@ -100,8 +100,9 @@ export function Behaviours() {
     cleanup.push(() => spy.disconnect());
     listen(window, 'resize', updateInd);
 
-    /* One frame loop: the marquee drifts and speeds up (or reverses) with your scroll; the chapter bar fills */
-    const track = $('.mq-track'), bar = $('#chBar'), chapters = $('.chapters');
+    /* One frame loop: the marquee drifts and speeds up (or reverses) with your scroll; the chapter bar fills;
+       the hero's chess pieces lag the scroll slightly */
+    const track = $('.mq-track'), bar = $('#chBar'), chapters = $('.chapters'), hero = $('.hero');
     let x = 0, v = 0, prev = scrollY, raf = 0;
     const frame = () => {
       const dy = scrollY - prev; prev = scrollY;
@@ -113,6 +114,7 @@ export function Behaviours() {
         if (x > 0) x -= half;
         track.style.transform = `translate3d(${x}px,0,0)`;
       }
+      if (hero && !reduce && scrollY < innerHeight * 1.5) hero.style.setProperty('--py', String(scrollY)); // chess parallax
       if (bar && chapters) {
         const r = chapters.getBoundingClientRect();
         bar.style.transform = `scaleX(${Math.min(1, Math.max(0, (innerHeight / 2 - r.top) / r.height))})`;

@@ -128,6 +128,13 @@ html[lang=ru] nav.main a{letter-spacing:.12em}
 @keyframes breathe{to{scale:1.045}}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--void) 22%,#080808cc 46%,transparent 72%),linear-gradient(0deg,var(--void),transparent 30%)}
 .hero-in{position:relative;z-index:2;padding:160px 0 70px}
+/* King + fallen pawn standing in front of the orb (die-cut from the poster). An ember glow breathes behind the king,
+   the pieces carry a thin rim of orange light, and on scroll they drift a little slower than the page for depth
+   (--py is set in Behaviours.tsx). */
+.chess{position:absolute;z-index:1;right:3vw;bottom:58px;width:min(44vw,720px);aspect-ratio:958/995;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
+.chess img{position:relative;width:100%;height:auto;filter:drop-shadow(0 0 22px #e8450a66) drop-shadow(0 22px 40px #000c);-webkit-mask:linear-gradient(to top,transparent,#000 9%);mask:linear-gradient(to top,transparent,#000 9%)}
+.chess-glow{position:absolute;left:45%;top:6%;width:62%;height:86%;border-radius:50%;background:radial-gradient(closest-side,#ff6a3d99,#e8450a40 45%,transparent);filter:blur(30px);animation:glow 7s ease-in-out infinite alternate}
+@keyframes glow{from{opacity:.55;scale:.92}to{opacity:1;scale:1.06}}
 .hero h1{margin:34px 0 52px}
 .hero h1 .ln{overflow:hidden;padding-bottom:.18em;margin-bottom:-.14em}
 .hero h1 .ln>span{display:inline-block;transform:translateY(108%);animation:rise 1.3s var(--ease) .15s forwards}
@@ -308,6 +315,7 @@ html:is([lang=th],[lang=zh]) .chat-fab{letter-spacing:.06em;font-size:13px}
 @media (max-width:900px){
   nav.main{display:none}
   .orb{width:110vw;right:-50vw;top:17%;opacity:.5}
+  .chess{width:58vw;right:-4vw;bottom:auto;top:64px;opacity:.7}   /* a black king behind white text keeps contrast */
   .mark .wm{width:88px}
   .right{gap:16px}
   .right>.tlink{display:none}
