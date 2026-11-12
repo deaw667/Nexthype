@@ -128,10 +128,10 @@ html[lang=ru] nav.main a{letter-spacing:.12em}
 @keyframes breathe{to{scale:1.045}}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--void) 22%,#080808cc 46%,transparent 72%),linear-gradient(0deg,var(--void),transparent 30%)}
 .hero-in{position:relative;z-index:2;padding:160px 0 70px}
-/* King + fallen pawn standing in front of the orb (die-cut from the poster). An ember glow breathes behind the king,
-   the pieces carry a thin rim of orange light, and on scroll they drift a little slower than the page for depth
+/* King + fallen pawn (die-cut from the poster) as a faint backdrop on the left, behind the headline.
+   Kept very low so it reads as texture, not a picture; it still drifts a little slower than the page on scroll
    (--py is set in Behaviours.tsx). */
-.chess{position:absolute;z-index:1;right:3vw;bottom:58px;width:min(44vw,720px);aspect-ratio:956/991;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
+.chess{position:absolute;z-index:1;left:-2vw;bottom:0;width:min(52vw,860px);aspect-ratio:956/991;opacity:.12;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
 /* the rim glow sits on a wrapper: a mask on the same element would clip the glow at the image's box (straight edges) */
 .chess .pieces{display:block;position:relative;filter:drop-shadow(0 0 22px #e8450a66) drop-shadow(0 22px 40px #000c)}
 /* a CSS background (not an <img>) so phones, where .chess is display:none, never download it */
