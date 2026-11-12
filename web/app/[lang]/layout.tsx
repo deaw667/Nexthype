@@ -1,23 +1,17 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import {
-  Archivo, Bodoni_Moda, IBM_Plex_Sans, IBM_Plex_Sans_Thai, Noto_Sans_SC, Noto_Serif_SC, Prata, Taviraj,
-} from 'next/font/google';
+import { Archivo, IBM_Plex_Sans, IBM_Plex_Sans_Thai, Noto_Sans_SC } from 'next/font/google';
 import { env } from '@/lib/env';
 import { hasLocale, locales, type Locale } from '@/lib/i18n';
 import '../globals.css';
 
-// Latin glyphs come from Archivo / Bodoni; Cyrillic, Thai and Chinese fall through to their partner font
-// (see --sans / --serif in globals.css). Only the Latin pair is preloaded; the rest load when their script appears.
+// One sans family: Latin glyphs come from Archivo; Cyrillic, Thai and Chinese fall through to their partner font
+// (see --sans in globals.css). Only Archivo is preloaded; the rest load when their script appears on the page.
 const archivo = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-archivo' });
-const bodoni = Bodoni_Moda({ subsets: ['latin'], axes: ['opsz'], variable: '--font-bodoni' });
 const plex = IBM_Plex_Sans({ subsets: ['cyrillic'], weight: ['400', '500', '600'], variable: '--font-plex', preload: false });
 const plexThai = IBM_Plex_Sans_Thai({ subsets: ['thai'], weight: ['400', '500', '600'], variable: '--font-plex-thai', preload: false });
-const prata = Prata({ subsets: ['cyrillic'], weight: '400', variable: '--font-prata', preload: false });
-const taviraj = Taviraj({ subsets: ['thai'], weight: ['300', '400', '500'], variable: '--font-taviraj', preload: false });
 const notoSans = Noto_Sans_SC({ weight: ['400', '500'], variable: '--font-noto-sans-sc', preload: false });
-const notoSerif = Noto_Serif_SC({ weight: ['400', '500'], variable: '--font-noto-serif-sc', preload: false });
-const fontVars = [archivo, bodoni, plex, plexThai, prata, taviraj, notoSans, notoSerif].map((f) => f.variable).join(' ');
+const fontVars = [archivo, plex, plexThai, notoSans].map((f) => f.variable).join(' ');
 
 // /en /th /zh /ru are prerendered at build time; any other value hits notFound() below
 export const generateStaticParams = () => locales.map((lang) => ({ lang }));
