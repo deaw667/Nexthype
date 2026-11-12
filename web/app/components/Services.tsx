@@ -39,6 +39,14 @@ const SHOTS = [
 export function Services({ t }: { t: T }) {
   return (
     <section className="chapters" id="services">
+      {/* spinning seal under the services strip; textLength spreads the words evenly around the circle (2πr ≈ 490) */}
+      <div className="badge" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="circ" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0" /></defs>
+          <text><textPath href="#circ" textLength={488} lengthAdjust="spacing">CAPTURE · ELEVATE · GROW · </textPath></text>
+        </svg>
+        <span className="mk" />
+      </div>
       <div className="wrap ch-grid">
         <div className="ch-sticky">
           <h2 className="label">{t('What we do')}</h2>

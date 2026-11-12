@@ -13,7 +13,7 @@ export function Hero({ t }: { t: T }) {
       {/* king and fallen pawn, die-cut from the "We create strategy" poster; a glow breathes behind them */}
       <div className="chess" aria-hidden="true">
         <span className="chess-glow" />
-        <Image src="/assets/chess.webp" alt="" width={958} height={995} sizes="(max-width: 900px) 64vw, 44vw" loading="eager" />
+        <span className="pieces"><Image src="/assets/chess.webp" alt="" width={956} height={991} sizes="(max-width: 900px) 58vw, 44vw" loading="eager" /></span>
       </div>
       <div className="wrap hero-in">
         <p className="label">{t('Digital agency · Rawai, Phuket')}</p>

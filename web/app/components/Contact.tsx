@@ -11,13 +11,6 @@ export function Contact({ lang, t }: { lang: Locale; t: T }) {
   const label = first && pick(CHAT_UI.cta, lang).replace('{x}', channelName(first, lang));
   return (
     <section className="contact" id="contact">
-      <div className="badge" aria-hidden="true">
-        <svg viewBox="0 0 200 200">
-          <defs><path id="circ" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0" /></defs>
-          <text><textPath href="#circ">CAPTURE · ELEVATE · GROW · CAPTURE · ELEVATE · GROW · </textPath></text>
-        </svg>
-        <span className="mk" />
-      </div>
       <div className="wrap contact-grid">
         <div>
           <p className="label">{t('Message us')}</p>
