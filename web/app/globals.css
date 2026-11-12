@@ -134,7 +134,8 @@ html[lang=ru] nav.main a{letter-spacing:.12em}
 .chess{position:absolute;z-index:1;right:3vw;bottom:58px;width:min(44vw,720px);aspect-ratio:956/991;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
 /* the rim glow sits on a wrapper: a mask on the same element would clip the glow at the image's box (straight edges) */
 .chess .pieces{display:block;position:relative;filter:drop-shadow(0 0 22px #e8450a66) drop-shadow(0 22px 40px #000c)}
-.chess img{display:block;width:100%;height:auto;-webkit-mask:linear-gradient(to top,transparent,#000 9%);mask:linear-gradient(to top,transparent,#000 9%)}
+/* a CSS background (not an <img>) so phones, where .chess is display:none, never download it */
+.chess .art{display:block;aspect-ratio:956/991;background:url(/assets/chess.webp) center/100% no-repeat;-webkit-mask:linear-gradient(to top,transparent,#000 9%);mask:linear-gradient(to top,transparent,#000 9%)}
 .chess-glow{position:absolute;left:45%;top:6%;width:62%;height:86%;border-radius:50%;background:radial-gradient(closest-side,#ff6a3d99,#e8450a40 45%,transparent);filter:blur(30px);animation:glow 7s ease-in-out infinite alternate}
 @keyframes glow{from{opacity:.55;scale:.92}to{opacity:1;scale:1.06}}
 .hero h1{margin:34px 0 52px}
@@ -319,7 +320,7 @@ html:is([lang=th],[lang=zh]) .chat-fab{letter-spacing:.06em;font-size:13px}
 @media (max-width:900px){
   nav.main{display:none}
   .orb{width:110vw;right:-50vw;top:17%;opacity:.5}
-  .chess{width:58vw;right:-4vw;bottom:auto;top:64px;opacity:.7}   /* a black king behind white text keeps contrast */
+  .chess{display:none}   /* desktop only */
   .mark .wm{width:88px}
   .right{gap:16px}
   .right>.tlink{display:none}
