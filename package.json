@@ -1,0 +1,11 @@
+{
+  "name": "nexthype",
+  "private": true,
+  "packageManager": "pnpm@11.27.1",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm --filter web build",
+    "start": "pnpm --filter web start",
+    "lint": "pnpm --filter web lint"
+  }
+}

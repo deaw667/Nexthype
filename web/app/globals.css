@@ -1,0 +1,342 @@
+/* Tailwind without its reset (preflight): the hand-written styles below keep the exact v1 look,
+   and Tailwind utilities are available for anything new. Brand colours are exposed as utilities (bg-ember, text-ivory…). */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme inline {
+  --color-void: var(--void);
+  --color-ink: var(--ink);
+  --color-ivory: var(--ivory);
+  --color-stone: var(--stone);
+  --color-ember: var(--ember);
+  --color-flame: var(--flame);
+  --color-wine: var(--wine);
+  --color-amber: var(--amber);
+  --font-serif: var(--serif);
+  --font-sans: var(--sans);
+}
+/* ─────────────────────────────────────────────────────────────
+   NEXTHYPE · brand tokens (taken from the real logo + Facebook cover)
+   logo gradient  #740F31 → #FF8F02     old site  #080808 / #E8450A / #FF6A3D
+   Orange = action. It is never decoration.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --void:#080808; --ink:#0F0E0D; --ink-2:#171412;
+  --line:#ffffff14; --line-2:#ffffff2b;
+  --ivory:#F2ECE4; --stone:#A39B91;
+  --ember:#E8450A; --flame:#FF6A3D; --wine:#740F31; --amber:#FF8F02;
+  --brand:linear-gradient(180deg,var(--wine),#B05622 50%,var(--amber));
+  /* Latin comes from the first font; Cyrillic, Thai and Chinese fall through to the matching partner:
+     Bodoni → Prata (Didone with Cyrillic) → Taviraj (Thai serif) → Noto Serif SC  (all loaded by next/font in app/[lang]/layout.tsx)
+     Archivo → IBM Plex Sans (Cyrillic) → IBM Plex Sans Thai → Noto Sans SC */
+  --serif:var(--font-bodoni),var(--font-prata),var(--font-taviraj),var(--font-noto-serif-sc),Didot,'Times New Roman',serif;
+  --sans:var(--font-archivo),var(--font-plex),var(--font-plex-thai),var(--font-noto-sans-sc),system-ui,sans-serif;
+  --logo-mark:url(/assets/logo-mark.png);
+  --logo-word:url(/assets/logo-wordmark.png);
+  --ease:cubic-bezier(.7,0,.2,1);
+  --ease-out:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:90px}
+body{background:var(--void);color:var(--ivory);font:400 16px/1.7 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:1px solid var(--ivory);outline-offset:6px}
+::selection{background:var(--ember);color:var(--void)}
+.wrap{width:min(1320px,90vw);margin-inline:auto}
+
+/* ── Type ── */
+.label{font:500 11px/1.6 var(--sans);font-stretch:125%;letter-spacing:.22em;text-transform:uppercase;color:var(--stone)}
+.label b{color:var(--ember);font-weight:500;margin-right:14px}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:400;letter-spacing:-.02em}
+h1{font-size:clamp(50px,6.6vw,116px);line-height:.98}
+h2{font-size:clamp(42px,5.4vw,88px);line-height:.98}
+h3{font-size:clamp(26px,2.5vw,38px);line-height:1.12;letter-spacing:-.01em}
+.em{color:var(--ember)}
+h1 .ln,h2 .ln{display:block}
+.lead{max-width:470px;color:var(--stone);font-size:17px}
+.body{max-width:520px;color:var(--stone)}
+
+/* Per-language type. Thai needs room for vowels and tone marks; Chinese has no case and
+   reads badly when tracked wide; Russian words run long, so display sizes step down a little */
+html:is([lang=th],[lang=zh]) body{line-height:1.85}
+html[lang=th] h1{line-height:1.22}
+html[lang=th] h2{line-height:1.2}
+html[lang=th] h3{line-height:1.4}
+html[lang=zh] h1,html[lang=zh] h2{line-height:1.18;letter-spacing:.02em}
+html[lang=zh] h1{font-size:clamp(44px,5.8vw,100px)}
+html[lang=zh] h3{line-height:1.4;letter-spacing:.02em}
+html:is([lang=th],[lang=zh]) .label{letter-spacing:.06em;font-size:12px}
+html:is([lang=th],[lang=zh]) .hero h1 .ln{padding-bottom:.1em;margin-bottom:-.06em}
+html:is([lang=th],[lang=zh]) .tag{letter-spacing:.02em;font-size:11px}
+html[lang=ru] h1{font-size:clamp(40px,4.6vw,84px);line-height:1.02}
+html[lang=ru] h2{font-size:clamp(36px,4.6vw,76px);line-height:1.02}
+html[lang=ru] .label{letter-spacing:.14em}
+.lang a:is([lang=th],[lang=zh]){font-size:13px;letter-spacing:.02em}
+
+/* ── Real logo, die-cut from the Facebook profile image and used as masks ── */
+.mk,.wm{display:block;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.mk{--m:var(--logo-mark);aspect-ratio:172/138;background:var(--brand)}
+.wm{--m:var(--logo-word);aspect-ratio:502/70;background:var(--ivory)}
+
+/* simplified ▷▷ used inside buttons, so the second triangle can move */
+.ff{width:26px;height:15px;overflow:visible;flex:none}
+.ff path{fill:none;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round;transition:transform .45s var(--ease)}
+a:hover .ff .f2,button:hover .ff .f2{transform:translateX(4px)}
+
+/* ── Actions ── */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:space-between;gap:22px;padding:21px 28px;background:var(--ember);color:var(--void);font:600 11.5px/1 var(--sans);font-stretch:125%;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;overflow:hidden;isolation:isolate;transition:transform .15s,color .4s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--ivory);transform:scaleX(0);transform-origin:right;transition:transform .55s var(--ease);z-index:-1}
+.btn:hover::before{transform:scaleX(1);transform-origin:left}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;color:var(--ivory);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn.ghost:hover{color:var(--void)}
+html:is([lang=th],[lang=zh]) :is(.btn,.tlink){letter-spacing:.06em;font-size:13px}
+html[lang=ru] :is(.btn,.tlink){letter-spacing:.12em}
+.tlink{position:relative;display:inline-flex;align-items:center;gap:14px;font:500 11.5px/1 var(--sans);font-stretch:125%;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;padding:10px 0}
+.tlink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(.25);transform-origin:left;transition:transform .5s var(--ease)}
+.tlink:hover::after{transform:scaleX(1)}
+
+/* ── Header ── */
+header{position:fixed;inset:0 0 auto;z-index:50;transition:background .4s,transform .5s var(--ease),border-color .4s;border-bottom:1px solid transparent}
+header.solid{background:#080808e8;backdrop-filter:blur(14px);border-color:var(--line)}
+header.hide{transform:translateY(-100%)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:84px;gap:24px}
+.mark{display:flex;align-items:center;gap:14px}
+.mark .mk{width:34px;animation:nudge 6s var(--ease) infinite}
+.mark .wm{width:104px}
+@keyframes nudge{0%,80%,100%{transform:none}86%{transform:translateX(5px)}92%{transform:translateX(-1px)}}
+nav.main{display:flex;gap:38px}
+nav.main a,.lang a{font:500 11px/1 var(--sans);font-stretch:125%;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);transition:color .2s}
+nav.main a:hover,.lang a:hover,.lang a[aria-current]{color:var(--ivory)}
+html:is([lang=th],[lang=zh]) nav.main a{letter-spacing:.04em;font-size:13px}
+html[lang=ru] nav.main a{letter-spacing:.12em}
+.right{display:flex;align-items:center;gap:34px}
+.lang{display:flex;align-items:center;gap:2px}
+.lang a{padding:8px 6px}
+.lang span{color:#ffffff30}
+
+/* ── Hero ── */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.orb{position:absolute;right:-15vw;top:50%;width:min(54vw,860px);aspect-ratio:1;translate:0 -52%;animation:breathe 16s ease-in-out infinite alternate;will-change:scale;border-radius:50%;background:var(--brand);isolation:isolate}
+/* the real cover marble is mostly white; multiplying it over the logo gradient turns the white into brand colour and keeps the veins */
+.orb img{width:100%;height:100%;border-radius:50%;animation:spin 160s linear infinite;will-change:transform;mix-blend-mode:multiply;filter:contrast(1.1)}
+.orb .shade{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 28%,#ffffff1f,transparent 38%,#0000004d 70%,#000000b3 100%)}
+.orb::after{content:"";position:absolute;inset:-2.2%;border:1px solid #f2ece41f;border-radius:50%}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes breathe{to{scale:1.045}}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--void) 22%,#080808cc 46%,transparent 72%),linear-gradient(0deg,var(--void),transparent 30%)}
+.hero-in{position:relative;z-index:2;padding:160px 0 70px}
+.hero h1{margin:34px 0 52px}
+.hero h1 .ln{overflow:hidden;padding-bottom:.18em;margin-bottom:-.14em}
+.hero h1 .ln>span{display:inline-block;transform:translateY(108%);animation:rise 1.3s var(--ease) .15s forwards}
+.hero h1 .ln:nth-child(2)>span{animation-delay:.3s}
+@keyframes rise{to{transform:none}}
+.hero-row{display:flex;flex-direction:column;align-items:flex-start;gap:40px}
+.ctas{display:flex;align-items:center;gap:36px}
+.from-chip{display:inline-flex;align-items:baseline;gap:10px;color:var(--stone);font-size:14px}
+.from-chip b{font:500 22px/1 var(--sans);font-variant-numeric:tabular-nums;color:var(--ivory)}
+.hero-bar{position:relative;z-index:2;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:24px 0 30px}
+
+/* ── Service marquee: speed follows your scroll; separators are the real logo mark ── */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:34px 0}
+.mq-track{display:flex;width:max-content;will-change:transform}
+.mq-track span{font:400 clamp(40px,4.6vw,72px)/1.15 var(--serif);letter-spacing:-.02em;white-space:nowrap;display:flex;align-items:center}
+.mq-track span::after{content:"";width:40px;aspect-ratio:172/138;margin:0 56px;background:var(--brand);-webkit-mask:var(--logo-mark) center/contain no-repeat;mask:var(--logo-mark) center/contain no-repeat}
+
+/* ── Capture · Elevate · Grow ── */
+.ch-grid{display:grid;grid-template-columns:5fr 7fr;gap:6vw}
+.ch-sticky{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:30px}
+.ch-words{position:relative;height:1.05em;overflow:hidden;font:400 clamp(60px,7.6vw,132px)/1 var(--serif);letter-spacing:-.03em}
+.ch-words span{position:absolute;inset:0;transform:translateY(135%);transition:transform .9s var(--ease)}
+.ch-words span.on{transform:none}
+.ch-words span.out{transform:translateY(-135%)}
+.ch-words span:nth-child(2){color:var(--ember)}
+.ch-meter{display:flex;align-items:center;gap:18px}
+.ch-bar{position:relative;flex:1;max-width:260px;height:1px;background:var(--line-2)}
+.ch-bar i{position:absolute;inset:0;background:var(--ivory);transform-origin:left;transform:scaleX(0)}
+.ch-media{position:relative;aspect-ratio:4/3;max-width:440px;overflow:hidden;background:var(--ink-2)}
+.ch-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.07);transition:opacity .9s var(--ease),transform 1.4s var(--ease-out)}
+.ch-media img.on{opacity:1;transform:none}
+.ch{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:12vh 0;border-bottom:1px solid var(--line)}
+.ch:last-child{border:0}
+.ch h3{margin:26px 0 22px;max-width:620px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:56px;border-top:1px solid var(--line)}
+.facts div{padding:24px 24px 0 0}
+.facts dt{font:500 clamp(24px,2.2vw,36px)/1.15 var(--sans);letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-bottom:10px}
+.facts dd{font-size:13.5px;line-height:1.55;color:var(--stone);max-width:210px}
+
+/* ── Selected work: real Instagram posts in a broken editorial grid ── */
+.work{padding:170px 0 150px;background:var(--ink)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:90px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:100px;align-items:start}
+.piece:nth-child(4n+1){grid-column:1/6}
+.piece:nth-child(4n+2){grid-column:8/12;margin-top:18vh}
+.piece:nth-child(4n+3){grid-column:3/7}
+.piece:nth-child(4n+4){grid-column:8/13;margin-top:6vh}
+.frame{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--ink-2)}
+.frame img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease-out)}
+.piece:hover .frame img{transform:scale(1.04)}
+figcaption{display:grid;grid-template-columns:44px 1fr auto;align-items:baseline;gap:8px;padding-top:22px}
+figcaption .serif{font-size:clamp(21px,1.7vw,27px);line-height:1.2;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .6s var(--ease)}
+.piece:hover figcaption .serif{background-size:100% 1px}
+
+/* ── Prices: monthly plans ── */
+.prices{padding:160px 0 130px}
+.prices .head{margin-bottom:60px}
+.ptabs{display:flex;border-bottom:1px solid var(--line);overflow-x:auto;margin-bottom:56px;scrollbar-width:none}
+.ptabs button{display:flex;align-items:baseline;gap:12px;padding:20px 0 20px;margin-right:42px;font-size:15px;color:var(--stone);border-bottom:1px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .25s,border-color .25s}
+.ptabs button span{font:500 10px var(--sans);font-stretch:125%;letter-spacing:.2em;color:var(--stone)}
+.ptabs button:hover{color:var(--ivory)}
+.ptabs button[aria-selected=true]{color:var(--ivory);border-color:var(--ember)}
+.panel{display:grid;grid-template-columns:3fr 9fr;gap:44px;align-items:start}
+.p-side figure{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--ink-2)}
+.p-side img{width:100%;height:100%;object-fit:cover;transition:opacity .5s,transform 1.2s var(--ease-out)}
+.p-side img.fade-in{animation:imgIn .7s var(--ease-out)}
+@keyframes imgIn{from{opacity:0;transform:scale(1.05)}}
+.p-side h3{margin:26px 0 10px}
+.p-side p{color:var(--stone);font-size:14.5px}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+.tier{display:flex;flex-direction:column;background:var(--ink);border-top:1px solid var(--line-2);padding:32px 28px 30px}
+.tier.best{background:var(--ink-2);border-top:2px solid var(--ember);margin-top:-14px;padding-top:44px}
+.tier .label{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--ivory)}
+.tag{font-size:10px;color:var(--void);background:var(--ember);padding:5px 9px;letter-spacing:.16em}
+.price{display:flex;align-items:flex-start;font:500 clamp(40px,3.8vw,60px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin:24px 0 8px}
+.price .cur{font-size:.44em;margin:.2em .1em 0 0;color:var(--stone)}
+.per{font-size:13px;color:var(--stone)}
+.desc{font-size:14px;line-height:1.55;color:var(--stone);margin:18px 0 22px;min-height:4.7em}
+.tier ul{list-style:none;margin-bottom:28px}
+.tier li{display:flex;justify-content:space-between;gap:14px;font-size:14px;padding:10px 0;border-top:1px solid var(--line)}
+.tier li b{font-weight:500;text-align:right}
+.tier li b.y{color:var(--ember)}
+.tier li b.n{color:#ffffff38}
+.tiers.in .tier{animation:tierIn .6s var(--ease-out) both}
+.tiers.in .tier:nth-child(2){animation-delay:.07s}
+.tiers.in .tier:nth-child(3){animation-delay:.14s}
+@keyframes tierIn{from{opacity:0;transform:translateY(16px)}}
+.qnote{margin-top:22px;font-size:13px;color:var(--stone)}
+.ads{display:grid;grid-template-columns:auto 1fr auto;gap:44px;align-items:center;margin-top:70px;padding:36px 0;border-block:1px solid var(--line)}
+.ads .big{font:500 clamp(46px,4.2vw,68px)/1 var(--sans);color:var(--ember);letter-spacing:-.03em}
+.ads h3{font-size:28px;margin-bottom:6px}
+.ads p{color:var(--stone);font-size:14.5px;max-width:560px}
+
+/* ── Prices: single projects, set like a menu ── */
+.menu{padding:150px 0;background:var(--ink)}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px 6vw}
+.menu h3{display:flex;align-items:baseline;gap:16px;margin-bottom:18px}
+.menu h3 .label{font-size:10px}
+.menu ul{list-style:none}
+.menu li{display:flex;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.menu li .nm{font-size:15px}
+.menu li small{display:block;font-size:12.5px;color:var(--stone);line-height:1.5}
+.menu li .dots{flex:1;min-width:20px;border-bottom:1px dotted #ffffff2e;transform:translateY(-5px)}
+.menu li .pr{font:500 16px/1 var(--sans);font-variant-numeric:tabular-nums;white-space:nowrap}  /* same family as the item names */
+
+/* ── Terms ── */
+.terms{padding:150px 0}
+.terms-grid{display:grid;grid-template-columns:5fr 7fr;gap:6vw}
+.terms ol{list-style:none}
+.terms li{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--line)}
+.terms li:first-child{padding-top:0}
+.terms li b{font:400 58px/.95 var(--serif);color:var(--ember);letter-spacing:-.02em}
+.terms li h3{font-size:27px;margin-bottom:6px}
+
+/* ── Contact ── */
+.contact{padding:240px 0 140px;position:relative;overflow:hidden;background:var(--ink)}
+.contact-grid{display:grid;grid-template-columns:7fr 5fr;gap:6vw;align-items:end}
+.contact h2{margin:30px 0 56px}
+.badge{position:absolute;right:5vw;top:56px;width:150px;height:150px;color:var(--stone)}
+.badge svg{width:100%;height:100%;animation:spin 40s linear infinite}
+.badge text{font:500 10.5px var(--sans);font-stretch:125%;letter-spacing:.33em;fill:currentColor}
+.badge .mk{position:absolute;inset:0;margin:auto;width:46px}
+.people a{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:22px 0;border-top:1px solid var(--line);transition:color .25s}
+.people a:hover{color:var(--flame)}
+.people .serif{font-size:26px}
+.addr{margin-top:34px;color:var(--stone);font-size:14px;line-height:1.7}
+
+footer{border-top:1px solid var(--line);padding:70px 0 34px;overflow:hidden}
+footer .wm{width:100%;background:var(--ink-2);margin-bottom:56px}
+.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;font-size:13px;color:var(--stone)}
+.foot nav{display:flex;gap:28px}
+.foot a:hover{color:var(--ivory)}
+
+/* ── In-page travel: scrollspy line, arrival line, fast-forward on click ── */
+nav.main{position:relative}
+nav.main a[aria-current]{color:var(--ivory)}
+nav.main .ind{position:absolute;left:0;bottom:-12px;height:1px;width:0;background:var(--ember);opacity:0;pointer-events:none;transition:transform .7s var(--ease),width .7s var(--ease),opacity .4s}
+.ch-cta{margin-top:44px;align-self:flex-start}
+.arrive{position:relative}
+.arrive::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--ember);transform-origin:left;animation:arrive 1.8s var(--ease) forwards;pointer-events:none}
+@keyframes arrive{0%{transform:scaleX(0);opacity:1}55%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+.go .ff path{animation:ffgo .7s var(--ease)}
+.go .ff .f2{animation-delay:.06s}
+@keyframes ffgo{45%{transform:translateX(14px);opacity:0}46%{transform:translateX(-10px);opacity:0}100%{transform:none;opacity:1}}
+[tabindex="-1"]:focus{outline:none}
+
+/* ── Chat: floating button + panel. Channels are ordered by the visitor's language ── */
+.chat-fab{position:fixed;right:24px;bottom:24px;z-index:60;display:flex;align-items:center;gap:12px;padding:14px 22px 14px 16px;background:#141110eb;backdrop-filter:blur(12px);border:1px solid var(--line-2);color:var(--ivory);font:500 11px/1 var(--sans);font-stretch:125%;letter-spacing:.2em;text-transform:uppercase;transition:transform .6s var(--ease),opacity .4s,border-color .3s}
+.chat-fab:hover,.chat-fab[aria-expanded=true]{border-color:var(--ember)}
+.chat-fab .mk{width:26px}
+.chat-fab.tucked{transform:translateY(160%);opacity:0;pointer-events:none}
+html:is([lang=th],[lang=zh]) .chat-fab{letter-spacing:.06em;font-size:13px}
+.chat-panel{position:fixed;right:24px;bottom:94px;z-index:60;width:min(380px,calc(100vw - 32px));max-height:calc(100svh - 140px);overflow:auto;background:#121010;border:1px solid var(--line-2);border-top:2px solid var(--ember);padding:24px 26px 20px;box-shadow:0 30px 80px #000a;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .35s,transform .55s var(--ease),visibility 0s .55s}
+.chat-panel.open{opacity:1;visibility:visible;transform:none;transition:opacity .35s,transform .55s var(--ease)}
+.cp-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cp-title{font-size:26px;line-height:1.2}
+.cp-x{font-size:28px;line-height:1;color:var(--stone);padding:2px 6px}
+.cp-x:hover{color:var(--ivory)}
+.cp-sub{color:var(--stone);font-size:13.5px;margin:6px 0 16px}
+.topic{font-size:13px;color:var(--stone);padding:10px 12px;background:var(--ink-2);margin-bottom:8px}
+.topic b{color:var(--ivory);font-weight:500}
+.chat-panel .people a{padding:15px 0}
+.chat-panel .people .serif{font-size:21px}
+.chat-panel .people a:first-child .serif,#channels a:first-child .serif{color:var(--ember)}
+.people em{font-style:normal;color:var(--ember)}
+.cp-mail{margin-top:14px;color:var(--stone)}
+.contact-ctas{display:flex;flex-direction:column;align-items:flex-start;gap:26px}
+.contact-ctas .tlink{text-transform:none;letter-spacing:.02em;font-size:14px;color:var(--stone)}
+@media (max-width:600px){.chat-fab{right:16px;bottom:16px;padding:14px}.chat-fab .t{display:none}.chat-panel{right:16px;bottom:80px}}
+
+/* ── Small screens ── */
+@media (max-width:1240px){nav.main{gap:26px}.right>.tlink{display:none}}
+@media (max-width:1100px){
+  .panel{grid-template-columns:1fr}
+  .p-side{display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:center}
+  .p-side h3{margin-top:0}
+}
+@media (max-width:900px){
+  nav.main{display:none}
+  .orb{width:110vw;right:-50vw;top:17%;opacity:.5}
+  .mark .wm{width:88px}
+  .right{gap:16px}
+  .right>.tlink{display:none}
+  .ctas{gap:20px 28px;flex-wrap:wrap}
+  .btn{padding:19px 22px;gap:16px}
+  .hero-bar .label:last-child{display:none}
+  .hero::before{background:linear-gradient(0deg,var(--void) 45%,#08080899 70%,transparent)}
+  .ch-grid,.terms-grid,.contact-grid,.menu-grid{grid-template-columns:1fr;gap:40px}
+  .menu-grid{gap:60px}
+  .ch-sticky{position:relative;height:auto;padding-top:110px}
+  .ch-words,.ch-meter,.ch-media{display:none}
+  .ch{min-height:0;padding:60px 0}
+  .facts{grid-template-columns:1fr 1fr}
+  .grid{grid-template-columns:1fr 1fr;column-gap:14px;row-gap:40px}
+  .piece:nth-child(n){grid-column:auto;margin-top:0}
+  .piece:nth-child(2n){margin-top:60px}
+  figcaption{grid-template-columns:1fr}
+  figcaption .label:first-child{display:none}
+  .head{flex-direction:column;align-items:start;margin-bottom:56px}
+  .tiers{grid-template-columns:1fr;gap:18px}
+  .tier.best{margin-top:0}
+  .desc{min-height:0}
+  .ads{grid-template-columns:1fr;gap:16px}
+  .terms li{grid-template-columns:90px 1fr}
+  .terms li b{font-size:40px}
+  .badge{display:none}
+  .p-side{grid-template-columns:110px 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero h1 .ln>span{transform:none}
+}

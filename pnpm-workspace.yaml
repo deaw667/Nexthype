@@ -1,0 +1,3 @@
+packages:
+  - web
+  # - server   # NestJS API, added later: `pnpm dlx @nestjs/cli new server --package-manager pnpm --skip-git`
