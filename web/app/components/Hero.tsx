@@ -10,11 +10,8 @@ export function Hero({ t }: { t: T }) {
         <Image src="/assets/marble-orb.webp" alt="" width={900} height={900} sizes="(max-width: 900px) 110vw, 54vw" loading="eager" fetchPriority="high" />
         <span className="shade" />
       </div>
-      {/* king and fallen pawn, die-cut from the "We create strategy" poster; a glow breathes behind them */}
-      <div className="chess" aria-hidden="true">
-        <span className="chess-glow" />
-        <span className="pieces"><span className="art" /></span>
-      </div>
+      {/* the chess scene from the "We create strategy" poster, faint, behind the headline (see .chess in globals.css) */}
+      <div className="chess" aria-hidden="true" />
       <div className="wrap hero-in">
         <p className="label">{t('Digital agency · Rawai, Phuket')}</p>
         <h1>

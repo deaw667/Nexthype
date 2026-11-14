@@ -128,16 +128,11 @@ html[lang=ru] nav.main a{letter-spacing:.12em}
 @keyframes breathe{to{scale:1.045}}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--void) 22%,#080808cc 46%,transparent 72%),linear-gradient(0deg,var(--void),transparent 30%)}
 .hero-in{position:relative;z-index:2;padding:160px 0 70px}
-/* King + fallen pawn (die-cut from the poster) as a faint backdrop on the left, behind the headline.
-   Kept very low so it reads as texture, not a picture; it still drifts a little slower than the page on scroll
-   (--py is set in Behaviours.tsx). */
-.chess{position:absolute;z-index:1;left:-2vw;bottom:0;width:min(52vw,860px);aspect-ratio:956/991;opacity:.12;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
-/* the rim glow sits on a wrapper: a mask on the same element would clip the glow at the image's box (straight edges) */
-.chess .pieces{display:block;position:relative;filter:drop-shadow(0 0 22px #e8450a66) drop-shadow(0 22px 40px #000c)}
-/* a CSS background (not an <img>) so phones, where .chess is display:none, never download it */
-.chess .art{display:block;aspect-ratio:956/991;background:url(/assets/chess.webp) center/100% no-repeat;-webkit-mask:linear-gradient(to top,transparent,#000 9%);mask:linear-gradient(to top,transparent,#000 9%)}
-.chess-glow{position:absolute;left:45%;top:6%;width:62%;height:86%;border-radius:50%;background:radial-gradient(closest-side,#ff6a3d99,#e8450a40 45%,transparent);filter:blur(30px);animation:glow 7s ease-in-out infinite alternate}
-@keyframes glow{from{opacity:.55;scale:.92}to{opacity:1;scale:1.06}}
+/* King, fallen pawn, neon frame, skyline and floor shadow, feathered out of the "We create strategy" poster,
+   as a faint backdrop on the left behind the headline. Kept very low so it reads as texture, not a picture; it
+   drifts a little slower than the page on scroll (--py is set in Behaviours.tsx). A CSS background (not an <img>)
+   so phones, where .chess is display:none, never download it. */
+.chess{position:absolute;z-index:1;left:-2vw;bottom:0;width:min(44vw,731px);aspect-ratio:1000/1208;background:url(/assets/chess-scene.webp) center/100% no-repeat;opacity:.12;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
 .hero h1{margin:34px 0 52px}
 .hero h1 .ln{overflow:hidden;padding-bottom:.18em;margin-bottom:-.14em}
 .hero h1 .ln>span{display:inline-block;transform:translateY(108%);animation:rise 1.3s var(--ease) .15s forwards}
