@@ -132,7 +132,7 @@ html[lang=ru] nav.main a{letter-spacing:.12em}
    as a faint backdrop on the left behind the headline. Kept very low so it reads as texture, not a picture; it
    drifts a little slower than the page on scroll (--py is set in Behaviours.tsx). A CSS background (not an <img>)
    so phones, where .chess is display:none, never download it. */
-.chess{position:absolute;z-index:1;left:-2vw;bottom:0;width:min(44vw,731px);aspect-ratio:1000/1208;background:url(/assets/chess-scene.webp) center/100% no-repeat;opacity:.12;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
+.chess{position:absolute;z-index:1;left:-2vw;bottom:0;width:min(44vw,731px);aspect-ratio:1000/1208;background:url(/assets/chess-scene.webp) center/100% no-repeat;opacity:.4;translate:0 calc(var(--py,0) * .16px);pointer-events:none}
 .hero h1{margin:34px 0 52px}
 .hero h1 .ln{overflow:hidden;padding-bottom:.18em;margin-bottom:-.14em}
 .hero h1 .ln>span{display:inline-block;transform:translateY(108%);animation:rise 1.3s var(--ease) .15s forwards}
