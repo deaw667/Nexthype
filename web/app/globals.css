@@ -161,7 +161,7 @@ html[lang=ru] nav.main a{letter-spacing:.12em}
 .ch-meter{display:flex;align-items:center;gap:18px}
 .ch-bar{position:relative;flex:1;max-width:260px;height:1px;background:var(--line-2)}
 .ch-bar i{position:absolute;inset:0;background:var(--ivory);transform-origin:left;transform:scaleX(0)}
-.ch-media{position:relative;aspect-ratio:4/3;max-width:440px;overflow:hidden;background:var(--ink-2)}
+.ch-media{position:relative;aspect-ratio:16/9;max-width:440px;overflow:hidden;background:var(--ink-2)}
 .ch-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.07);transition:opacity .9s var(--ease),transform 1.4s var(--ease-out)}
 .ch-media img.on{opacity:1;transform:none}
 .ch{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:12vh 0;border-bottom:1px solid var(--line)}
@@ -228,9 +228,22 @@ figcaption .serif{font-size:clamp(21px,1.7vw,27px);line-height:1.2;background:li
 
 /* ── Prices: single projects, set like a menu ── */
 .menu{padding:150px 0;background:var(--ink)}
-.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px 6vw}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px 6vw;counter-reset:grp}
 .menu h3{display:flex;align-items:baseline;gap:16px;margin-bottom:18px}
 .menu h3 .label{font-size:10px}
+.menu h3 .label::before{counter-increment:grp;content:"0" counter(grp)}
+.menu h4{display:flex;align-items:baseline;gap:12px;font-size:20px;font-weight:500;margin-bottom:8px}
+.menu h4 b{color:var(--ember);font-weight:500}
+.menu h4 .label{font-size:10px;margin-left:auto}
+/* video editing rate card: full width, packages side by side, add-ons in two columns */
+.menu .video{grid-column:1/-1}
+.vid-note{max-width:640px;color:var(--stone);font-size:14px}
+.vid-pk{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 3vw;margin:36px 0 64px}
+.vid-inc{min-height:3.2em;color:var(--stone);font-size:13px}
+.vid-add{columns:2;column-gap:6vw}
+.vid-add li{break-inside:avoid}
+.menu li small em{font-style:normal;color:var(--flame)}
+.vid-foot{margin-top:28px}
 .menu ul{list-style:none}
 .menu li{display:flex;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
 .menu li .nm{font-size:15px}
@@ -320,11 +333,14 @@ html:is([lang=th],[lang=zh]) .chat-fab{letter-spacing:.06em;font-size:13px}
   .right{gap:16px}
   .right>.tlink{display:none}
   .ctas{gap:20px 28px;flex-wrap:wrap}
-  .btn{padding:19px 22px;gap:16px}
+  .btn{padding:19px 22px;gap:16px;white-space:normal}   /* long labels (RU, TH) wrap instead of widening the page */
   .hero-bar .label:last-child{display:none}
   .hero::before{background:linear-gradient(0deg,var(--void) 45%,#08080899 70%,transparent)}
   .ch-grid,.terms-grid,.contact-grid,.menu-grid{grid-template-columns:1fr;gap:40px}
   .menu-grid{gap:60px}
+  .vid-pk{grid-template-columns:1fr;gap:40px}
+  .vid-inc{min-height:0}
+  .vid-add{columns:1}
   .ch-sticky{position:relative;height:auto;padding-top:110px}
   .ch-words,.ch-meter,.ch-media{display:none}
   .ch{min-height:0;padding:60px 0}

@@ -13,7 +13,7 @@ const CHAPTERS: Chapter[] = [
   {
     word: 'Capture', title: 'Cars, villas, plates and faces, shot to sell.',
     body: 'We shoot on location or in the studio, light and retouch every frame, then cut short films sized for Reels, TikTok and YouTube Shorts. Subtitles and voice-over when you need them.',
-    facts: [['฿1,200', 'Per car shoot, with 10–15 retouched photos'], ['฿1,500', 'Per 30–60 second showcase film with music'], ['+฿300', 'For subtitles, or +฿500 for a voice-over']],
+    facts: [['฿1,200', 'Per car shoot, with 10–15 retouched photos'], ['฿1,500', 'Per 30–60 second showcase film with music'], ['฿900', 'Starting price to edit a clip of up to 30 seconds']],
     cta: ['#price-photo', 'See photo and video prices'],
   },
   {
@@ -30,10 +30,11 @@ const CHAPTERS: Chapter[] = [
   },
 ];
 
+// 16:9 crops cut from the posters so each subject sits whole in the frame (the car, the matcha pack, the sales laptop)
 const SHOTS = [
-  { src: '/assets/cut-auto.webp', alt: 'BMW Z4 roadster shot by Nexthype' },
-  { src: '/assets/cut-retail.webp', alt: 'Matcha packaging designed by Nexthype' },
-  { src: '/assets/work-strategy.webp', alt: 'Nexthype team planning a marketing strategy', pos: '50% 80%' },
+  { src: '/assets/ch-capture.webp', alt: 'BMW Z4 roadster shot by Nexthype' },
+  { src: '/assets/ch-elevate.webp', alt: 'Matcha packaging designed by Nexthype' },
+  { src: '/assets/ch-grow.webp', alt: 'Laptop showing sales up 245% from a Nexthype ad campaign' },
 ];
 
 export function Services({ t }: { t: T }) {
@@ -56,7 +57,7 @@ export function Services({ t }: { t: T }) {
           <div className="ch-meter"><span className="label" id="chCount">01 / 03</span><span className="ch-bar"><i id="chBar" /></span></div>
           <div className="ch-media">
             {SHOTS.map((s, i) => (
-              <Image key={s.src} src={s.src} alt={s.alt} fill sizes="440px" className={i === 0 ? 'on' : undefined} style={s.pos ? { objectPosition: s.pos } : undefined} />
+              <Image key={s.src} src={s.src} alt={s.alt} fill sizes="440px" className={i === 0 ? 'on' : undefined} />
             ))}
           </div>
         </div>
